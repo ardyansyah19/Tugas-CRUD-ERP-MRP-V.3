@@ -308,13 +308,3 @@ diinginkan dan menekan **Konversi**: item beli → `purchase_order` (status
 - Semua endpoint tulis (POST/PUT/DELETE) tetap memakai CSRF token & rate limit
   seperti V2; error database (data duplikat, referensi terpakai) diterjemahkan
   ke pesan berbahasa Indonesia, bukan pesan SQL mentah.
-
-### 11.6 Halaman Baru
-
-`dashboard.php`, `kelas.php`, `item.php` (+ editor BOM), `supplier.php`,
-`kebutuhan.php`, `mrp.php`, `po.php`, `wo.php`, `stok.php` — semua memakai
-layout & navigasi bersama di `partials/layout.php` dan inti JS di
-`js/erp-core.js` (client API, modal, toast, CRUD generik). Halaman mahasiswa
-lama (`index.php`) tetap ada, ditambah kolom & filter **Kelas**.
-
-**Login tetap sama**: `admin` / `admin123` (segera ganti setelah login pertama).
