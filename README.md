@@ -260,24 +260,6 @@ mahasiswa" untuk menata ulang seluruh data bila rentang kelas diubah.
   menjadi PO/WO sungguhan.
 
 **View**: `v_rekap_kelas`, `v_stok_item`, `v_bom_detail`.
-
-### 11.3 Logika MRP
-
-Engine ada di `lib/mrp.php` (`mrp_hitung()`), memakai bucket mingguan:
-
-1. Item diurutkan berdasarkan **low-level code** (0 = barang jadi, makin ke bawah
-   BOM nilainya makin besar) agar kebutuhan dependen (dari planned release induk)
-   sudah tersedia sebelum item komponen dihitung.
-2. Per minggu: `Net Requirement = Safety Stock − (On Hand + Scheduled Receipt − Gross)`
-   jika hasilnya kurang dari safety stock.
-3. Net requirement dibulatkan sesuai **lot sizing** item: L4L (persis kebutuhan),
-   FOQ (kelipatan ukuran lot tetap), atau POQ (digabung untuk beberapa periode).
-4. **Planned Release** = Planned Receipt digeser mundur sebesar *lead time*; bila
-   jatuh sebelum minggu ke-1, ditandai **terlambat**.
-5. Planned release item yang diproduksi (FG/SFG) otomatis meledak ke
-   kebutuhan dependen komponennya via BOM (termasuk faktor scrap %).
-
-Hasil MRP hanya berupa **rencana** (`mrp_planned_order`, status `planned`).
 Rencana ini baru menjadi transaksi sungguhan setelah pengguna memilih baris yang
 diinginkan dan menekan **Konversi**: item beli → `purchase_order` (status
 `draft`, dikelompokkan per supplier), item produksi → `work_order` (status
