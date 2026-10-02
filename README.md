@@ -282,29 +282,3 @@ Rencana ini baru menjadi transaksi sungguhan setelah pengguna memilih baris yang
 diinginkan dan menekan **Konversi**: item beli → `purchase_order` (status
 `draft`, dikelompokkan per supplier), item produksi → `work_order` (status
 `planned`).
-
-### 11.4 Alur Operasional
-
-1. **Kebutuhan (MPS)** — isi pesanan/forecast untuk barang jadi.
-2. **MRP → Jalankan MRP** — pilih tanggal mulai (dibulatkan ke hari Senin),
-   horizon minggu, opsional kelas & mahasiswa PIC.
-3. Lihat tabel MRP per item (gross/SR/on hand/net/planned) dan tab **Rencana
-   Order** → centang baris → **Konversi** menjadi PO/WO.
-4. **Purchase Order** — terbitkan (draft → open) → terima barang (stok bahan
-   baku bertambah otomatis, tercatat di `stok_mutasi`).
-5. **Work Order** — release → tandai selesai (komponen BOM otomatis terpotong
-   dari stok/backflush, hasil produksi masuk stok). Sistem menolak
-   penyelesaian bila stok komponen tidak cukup.
-6. **Stok** — lihat status tiap item (aman/kritis/habis), riwayat mutasi, dan
-   penyesuaian manual (stok opname).
-
-### 11.5 Validasi & Aturan Bisnis Penting
-
-- Barang jadi (FG) tidak boleh menjadi komponen item lain; bahan baku (RM) tidak
-  boleh punya komponen BOM; sistem mendeteksi & menolak siklus BOM.
-- Item bertipe RM otomatis `pengadaan = beli`, FG/SFG otomatis `produksi`.
-- Mahasiswa yang dipilih sebagai PIC pada MRP/Work Order harus anggota kelas
-  yang dipilih (atau kelasnya otomatis mengikuti PIC).
-- Semua endpoint tulis (POST/PUT/DELETE) tetap memakai CSRF token & rate limit
-  seperti V2; error database (data duplikat, referensi terpakai) diterjemahkan
-  ke pesan berbahasa Indonesia, bukan pesan SQL mentah.
