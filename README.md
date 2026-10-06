@@ -177,28 +177,3 @@ GET  /api/auth.php?action=check
 ```http
 GET /api/export.php?search=..&jurusan=..
 ```
-
-## 9. Jika Muncul Error Koneksi Database
-
-1. MySQL/MariaDB sudah berjalan.
-2. Nama database adalah `crud_mahasiswa`.
-3. Username dan password di `config/database.php` benar.
-4. Port MySQL sesuai konfigurasi komputer Anda (default DSN memakai 3306,
-   ubah lewat env var `DB_PORT` bila berbeda).
-5. Folder project berada di `htdocs` XAMPP atau `www` Laragon.
-6. PHP yang digunakan mendukung PDO MySQL dan ekstensi `fileinfo` (untuk
-   validasi upload foto).
-
-## 10. Catatan Keamanan Lanjutan
-
-Project ini sudah jauh lebih siap dibanding versi awal (login, CSRF, rate
-limit, validasi ketat, proteksi folder upload), namun untuk deployment
-production sesungguhnya tetap disarankan menambahkan:
-
-- Role/permission bertingkat (mis. admin vs staf input data)
-- Fitur ganti password & reset password dari dalam aplikasi
-- Rate limiting di level server/proxy (mis. Nginx `limit_req`, atau Cloudflare)
-- HTTPS wajib + `Secure` cookie flag
-- Logging aktivitas (audit trail) untuk create/update/delete
-- Backup database terjadwal
-- Pengaturan CORS yang lebih ketat jika API diakses dari domain lain
